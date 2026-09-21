@@ -1,7 +1,9 @@
 import express, {Application, Request, Response} from 'express' ;
 import carRoutes from './routes/cars' ;
+import { env } from "./config/env" ;
 
-const PORT = process.env.PORT || 3425;
+// Allows the .ENV folder to read in the port value privately
+const PORT = env.port;
 
 const app: Application = express();
 // the ping route (To display my name)
