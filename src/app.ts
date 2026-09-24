@@ -2,11 +2,14 @@ import express, {Application, Request, Response} from 'express' ;
 import carRoutes from './routes/cars' ;
 import { env } from "./config/env" ;
 import { connectDB } from './config/database';
+import {authenticateKey} from './middleware/auth.middleware';
 
 // Allows the .ENV folder to read in the port value privately
 const PORT = env.port;
 
 const app: Application = express();
+
+app.use(authenticateKey); // this tells the application to use the middleware 
 // the ping route (To display my name)
 app.get("/ping", async (_req : Request, res: Response) => {
     res.json({
@@ -20,6 +23,7 @@ app.get('/bananas', async (_req : Request, res: Response) => {
         
     });
 });
+app.use(express.json()) // Middleware to parse JSON request bodies
 // The apples route
 app.get('/apples', async (_req : Request, res: Response) => {
     res.json({
@@ -52,4 +56,3 @@ app.use((req, _res, next) => {
 
 // Telling the application to use the router
 app.use('/api/v1/cars', carRoutes); 
-app.use(express.json()); // Middleware to parse JSON request bodies

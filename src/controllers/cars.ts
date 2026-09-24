@@ -30,6 +30,7 @@ getCarById = async (req: Request, res: Response): Promise<void> => {
 
 createCar = async (req: Request, res: Response): Promise<void> => {
     try{
+        console.log(req.body);
         const newCar = await carService.createCar(req.body);
         res.status(201).json(newCar);
     } catch (error) {
@@ -55,7 +56,16 @@ updateCar = async (req: Request, res: Response): Promise<void> => {
 
  // DELETE a car
 deleteCar = async (req: Request, res: Response): Promise<void> => {
-    res.status(200).json({ success: true,
-    data: `this is just dummy for now a response to the delete car by id request with car id ${req.params.id}` });
+    try{
+        const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
+        const deletedCar = await carService.deleteCar(id);
+        if(!deletedCar){
+            res.status(404).json({message: 'Car not found'});
+            return;
+        }
+        res.status(200).json(deletedCar);
+    } catch(erorr){
+        res.status(200).json({ success: true});
+    }
 };
 }

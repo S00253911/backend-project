@@ -5,7 +5,8 @@ export interface ICar{
     model: string;
 }
 
-const carSchema = new Schema<ICar>({
+const carSchema = new Schema<ICar>(
+{
     make: {type: String, required: true},
     model: {type: String, required: true},
 },
