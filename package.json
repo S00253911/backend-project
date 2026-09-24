@@ -15,11 +15,21 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
-    "@types/node": "^22.20.3",
-    "express": "^5.2.1"
+    "dotenv": "^18.0.1",
+    "express": "^5.2.1",
+    "mongodb": "^7.6.0",
+    "mongoose": "^9.10.1"
   },
   "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.6.2",
     "tsx": "^4.23.13",
     "typescript": "^7.0.2"
+  },
+  "allowScripts": {
+    "express@5.2.1": true,
+    "dotenv@18.0.1": true,
+    "mongodb@7.6.0": true,
+    "mongoose@9.10.1": true
   }
 }
