@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express'; 
 
+
 export const authenticateKey = async (req : Request, res : Response, next : NextFunction): Promise<void> => { 
 const apiKey = req.headers['x-api-key']; 
  
@@ -9,9 +10,10 @@ status: 'fail',
 message: 'Unauthorized: Missing api-key header' 
 }); 
 
- 
 return; 
 } 
 next(); 
+
+
 
 }; 
