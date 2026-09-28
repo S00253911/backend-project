@@ -1,6 +1,9 @@
 import { Router } from 'express'; 
 import { CarController } from '../controllers/cars'; 
 import { authenticateKey } from '../middleware/auth.middleware';
+import { createCarZScheme } from '../models/cars';
+import { updateCarZSchema } from '../models/cars';
+import {validate} from '../middleware/validate.middleware';
 
 const router = Router(); 
 const carController = new CarController(); 
@@ -10,9 +13,9 @@ router.get('/', carController.getCars);
 // get the car by ID route
 router.get('/:id', carController.getCarById); 
 // create a new car route
-router.post('/', carController.createCar); 
+router.post('/', validate(createCarZScheme), carController.createCar); 
 // update a car by its ID
-router.put('/:id', carController.updateCar); 
+router.put('/:id', validate(updateCarZSchema),carController.updateCar); 
 // delete a car by its ID
 router.delete('/:id', carController.deleteCar); 
 
