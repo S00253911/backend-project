@@ -3,6 +3,8 @@ import carRoutes from './routes/cars' ;
 import { env } from "./config/env" ;
 import { connectDB } from './config/database';
 import {authenticateKey} from './middleware/auth.middleware';
+import swaggerUi from 'swagger-ui-express';
+import { swaggerSpec } from './config/swagger';
 
 //import { apps } from './middleware/simplelogging';
 // ** Updated  the app.use function to the imported function 'apps'. Routes now use apps.get instead of app.get ** 
@@ -60,3 +62,4 @@ app.use((req, _res, next) => {
 
 // Telling the application to use the router
 app.use('/api/v1/cars',authenticateKey, carRoutes);  // added the authentication to the router directly
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec)); // Swagger documentation route
