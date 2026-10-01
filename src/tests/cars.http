@@ -21,6 +21,7 @@ x-api-key: blahblah
 ###
 GET {{endpoint}}/sillycarID HTTP/3.0
 content-type: application/json
+x-api-key: blahblah
 
 ###
 

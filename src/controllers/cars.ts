@@ -1,7 +1,11 @@
 import { Request, Response } from 'express'; 
 import { CarService } from '../services/cars';
+import { createCarZScheme } from '../models/cars';
+import { updateCarZSchema } from '../models/cars';
 
 const carService = new CarService();
+
+
 
 export class CarController {
     // GET all cars 
@@ -36,6 +40,15 @@ createCar = async (req: Request, res: Response): Promise<void> => {
     } catch (error) {
         res.status(500).json({ message: 'Error creating car', error });
     }
+
+    const validation = createCarZScheme.safeParse(req.body);
+
+    console.log
+
+    if (!validation.success){
+        res.status(400).json({message: 'Invalid car data', errors: validation.error.issues });
+        return;
+    }
 };
  
 
@@ -52,6 +65,16 @@ updateCar = async (req: Request, res: Response): Promise<void> => {
     } catch (error) {
         res.status(500).json({ message: 'Error updating car', error });
     }
+
+    const validation = updateCarZSchema.safeParse(req.body);
+
+    console.log
+    
+    if (!validation.success){
+        res.status(400).json({message: 'Invalid car data', errors: validation.error.issues });
+        return;
+    }
+    
 };
 
  // DELETE a car

@@ -1,0 +1,6 @@
+Labsheet 5 -=Challenges I Encountered and how I overcame them=-
+
+- Server was booting up fine and normally but nothing was being received on the client end. HTTP requests weren't being received or sent to or fro to the server.
+
+-= FIX =- app.use(authenticateKey) was placed too low in the code below the app.use(express) this was causing it not to work.
+
