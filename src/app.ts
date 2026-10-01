@@ -9,8 +9,8 @@ import {authenticateKey} from './middleware/auth.middleware';
 // Allows the .ENV folder to read in the port value privately
 const PORT = env.port;
 export const app: Application = express();
-app.use(authenticateKey);
-app.use(express.json); // Weirdly enough when i use the apps import function for Application Express. The server does not receive a request or give a response to the client.
+//app.use(authenticateKey);
+app.use(express.json()); // Weirdly enough when i use the apps import function for Application Express. The server does not receive a request or give a response to the client.
 
 
 // the ping route (To display my name)
