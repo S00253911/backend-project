@@ -13,3 +13,7 @@ export const connectDB = async (): Promise<void> => {
         process.exit(1); // Exit process with failure
     }
 }
+
+export const disconnectDB = async (): Promise<void> => {
+    await mongoose.disconnect();
+}

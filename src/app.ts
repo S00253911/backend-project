@@ -1,8 +1,8 @@
 import express, {Application, Request, Response} from 'express' ;
 import carRoutes from './routes/cars' ;
 import { env } from "./config/env" ;
-import { connectDB } from './config/database';
-import {authenticateKey} from './middleware/auth.middleware';
+//import { connectDB } from './config/database';
+//import {authenticateKey} from './middleware/auth.middleware';
 import swaggerUi from 'swagger-ui-express';
 import { swaggerSpec } from './config/swagger';
 
@@ -45,15 +45,15 @@ app.get('/oranges', async (_req : Request, res: Response) => {
 });
 
 // Starting the server and connecting to the database
-const startServer = async () => {
-    await connectDB(); // Connect to the database before starting the server
+// const startServer = async () => {
+//     await connectDB(); // Connect to the database before starting the server
 
-    app.listen(PORT, () => {
-        console.log(`Server is running on port ${PORT}`);
-    });
-};
+//     app.listen(PORT, () => {
+//         console.log(`Server is running on port ${PORT}`);
+//     });
+// };
 
-startServer(); // Start the server
+//startServer(); // Start the server
 
 app.use((req, _res, next) => {
     console.log(`${req.method} ${req.originalUrl}`);
@@ -61,5 +61,5 @@ app.use((req, _res, next) => {
 });
 
 // Telling the application to use the router
-app.use('/api/v1/cars',authenticateKey, carRoutes);  // added the authentication to the router directly
+app.use('/api/v1/cars', carRoutes);  // added the authentication to the router directly
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec)); // Swagger documentation route
