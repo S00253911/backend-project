@@ -4,3 +4,8 @@ Labsheet 5 -=Challenges I Encountered and how I overcame them=-
 
 -= FIX =- app.use(authenticateKey) was placed too low in the code below the app.use(express) this was causing it not to work.
 
+
+
+Labsheet 6 -=Challenges I Encountered and how I overcame them=-
+
+- Fixed HTTP requests not being sent. app.use(express.json) <------ wrong | app.use(express.json()) <------ correct
