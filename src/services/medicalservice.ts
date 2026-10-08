@@ -86,6 +86,7 @@ export class MedicalService{
     async updateAppointment(id: string, appointmentData: Partial<IAppointment>): Promise<IAppointment | null>{
         return await AppointmentModel.findByIdAndUpdate(id, appointmentData, {returnDocument: 'after'}).lean();
     }
+    
     async deleteAppointment(id: string): Promise<IAppointment | null> {
         return await AppointmentModel.findByIdAndDelete(id).lean();
     }
