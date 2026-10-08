@@ -1,5 +1,14 @@
-import {CarModel, ICar} from '../models/cars';
+import {CarModel, ICar, IPatient} from '../models/cars';
 import {HydratedDocument} from 'mongoose';
+
+
+export class MedicalService{
+
+    async getAllPatients(): Promise<IPatient[]> {
+        return await PatientModel.find().lean();
+    }
+}
+
 
 export class CarService {
     async getAllCars(): Promise<ICar[]> {

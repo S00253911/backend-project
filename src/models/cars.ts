@@ -34,11 +34,16 @@ export const updateCarZSchema = z.object({
     year: z.number().min(1950).optional(),
 })
 
+export const createPatientSchema = z.object({
+
+    
+})
 export interface ICar{
     make: string;
     model: string;
     year: Number;
 }
+
 
 const carSchema = new Schema<ICar>(
 {
@@ -48,5 +53,6 @@ const carSchema = new Schema<ICar>(
 },
 {timestamps: true}
 );
+
 
 export const CarModel = model<ICar>('Car', carSchema);
