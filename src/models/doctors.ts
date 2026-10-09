@@ -1,5 +1,23 @@
 import { model, Schema } from 'mongoose';
 import { IPatient } from './patients'; // importing the IDoctor interface    
+import { z } from 'zod';
+
+export const createDoctorZSchema = z.object({
+    title: z.string().min(1),
+    firstName: z.string().min(1),
+    lastName: z.string().min(1),
+    specialization: z.string().min(1),
+    age: z.number().min(0)
+
+});
+
+export const updateDoctorZSchema = z.object({
+    title: z.string().min(1),
+    firstName: z.string().min(1),
+    lastName: z.string().min(1),
+    specialization: z.string().min(1),
+    age: z.number().min(0)
+});
 
 export interface IDoctor{ // Doctor Interface
     title: string;

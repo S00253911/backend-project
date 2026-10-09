@@ -1,7 +1,17 @@
 import {Schema, model} from 'mongoose';
 import { IPatient } from './patients';
 import { IDoctor } from './doctors';
+import { z } from 'zod';
 
+export const createMedicalRecordZSchema = z.object({
+    age: z.number(),
+    eirCode: z.string().min(1),
+});
+
+export const updateMedicalRecordZSchema = z.object({
+    age: z.number(),
+    eirCode: z.string().min(1),
+});
 
 export interface IMedicalRecord{ // Patients Medical Record
     patient: IPatient;
@@ -17,9 +27,9 @@ const medicalRecordSchema = new Schema<IMedicalRecord>(
         patient: {type: Schema.Types.ObjectId, ref: 'Patient'},
         doctor: {type: Schema.Types.ObjectId, ref: 'Doctor'},
         date: {type: Date, required: true},
-        diagnosis: {type: String, required: true},
-        treatment: {type: String, required: true},
-        prescription: {type: String, required: true}
+        diagnosis: {type: String, required: false},
+        treatment: {type: String, required: false},
+        prescription: {type: String, required: false}
     },
     {timestamps: true}
 );

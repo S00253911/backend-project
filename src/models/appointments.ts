@@ -1,6 +1,20 @@
 import {Schema, model} from 'mongoose';
 import { IPatient } from './patients';
 import { IDoctor } from './doctors';
+import { z } from 'zod';
+
+export const createAppointmentZSchema = z.object({
+    date: z.date(),
+    time: z.string(),
+    reason: z.string().min(1)
+
+});
+
+export const updateAppointmentZSchema = z.object({
+    date: z.date(),
+    time: z.string(),
+    reason: z.string().min(1)
+});
 
 export interface IAppointment{ // Patient Appointment Interface
     patient: IPatient;

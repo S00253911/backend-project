@@ -1,10 +1,12 @@
 import { Request, Response } from 'express'; 
-import { CarService } from '../services/cars';
 import { MedicalService } from '../services/medicalservice';
 
 // ZOD Validation Schema's
-import { createCarZScheme } from '../models/cars';
-import { updateCarZSchema } from '../models/cars';
+
+
+//Import The Zod Patient Schema's from ../models later for  middleware authentication
+import { createPatientZSchema } from '../models/patients';
+import { updatePatientZSchema } from '../models/patients';
 
 const patientService = new MedicalService();
 
@@ -21,14 +23,14 @@ getPatients = async (_req: Request, res: Response): Promise<void> => {
     }
 /**
  * @openapi
- *  /cars:
+ *  /patients:
  *    get:
- *        summary: Retrieve all cars
+ *        summary: Retrieve all patients
  *        tags:
- *          - Cars
+ *          - patients
  *        responses: 
  *          200:
- *            description: Successfully retrieved cars
+ *            description: Successfully retrieved patients
  *          500:
  *            description: Internal server error
  */
@@ -49,11 +51,11 @@ getPatientById = async (req: Request, res: Response): Promise<void> => {
 
 /** 
 * @openapi 
-* /cars/{id}: 
+* /patients/{id}: 
 *   get: 
-*     summary: Get a car by ID 
+*     summary: Get a patient by ID 
 *     tags: 
-*       - Cars 
+*       - patients 
 *     parameters: 
 *       - in: path 
 *         name: id 
@@ -62,9 +64,9 @@ getPatientById = async (req: Request, res: Response): Promise<void> => {
 *           type: string 
 *     responses: 
 *       200: 
-*         description: Car found 
+*         description: patient found 
 *       404: 
-*         description: Car not found 
+*         description: Patient not found 
 *       500: 
 *         description: Internal server error 
 */ 
@@ -82,31 +84,31 @@ createPatient = async (req: Request, res: Response): Promise<void> => {
 
     // ** COMMENTED OUT FOR NOW JUST FOR REFERENCE POINT BEFORE I MAKE THE ZOD SCHEMA's FOR VALIDATION **
 
-//   const validation = createCarZScheme.safeParse(req.body);
+  const validation = createPatientZSchema.safeParse(req.body);
 
-//     console.log
+    console.log
 
-//     if (!validation.success){
-//         res.status(400).json({message: 'Invalid car data', errors: validation.error.issues });
-//         return;
-//     }
+    if (!validation.success){
+        res.status(400).json({message: 'Invalid patient data', errors: validation.error.issues });
+        return;
+    }
 
     /**
      * @openapi
-     * /cars:
+     * /patients:
      *   post:
-     *    summary: Create a new car
+     *    summary: Create a new patient
      *    tags:
-     *     - Cars
+     *     - patients
      *   requestBody:
      *    required: true
      *   content:
      *    application/json:
      *    schema:
-     *    $ref: '#/components/schemas/CreateCarInput'
+     *    $ref: '#/components/schemas/CreatepatientInput'
      *   responses:
      *    201:
-     *    description: Successfully created car
+     *    description: Successfully created patient
      *   400:
      *   description: Bad request
      *  500:
@@ -115,38 +117,40 @@ createPatient = async (req: Request, res: Response): Promise<void> => {
 };
  
 
- // UPDATE a car by its ID
+ // UPDATE a patient by its ID
 updatePatient = async (req: Request, res: Response): Promise<void> => {
     try{
         const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
         const updatedPatient = await patientService.updatePatient(id, req.body);
         if (!updatedPatient){
-            res.status(404).json({message: 'Car not found'});
+            res.status(404).json({message: 'Patient not found'});
             return;
         }
         res.status(200).json(updatedPatient);
     } catch (error) {
-        res.status(500).json({ message: 'Error updating car', error });
+        res.status(500).json({ message: 'Error updating patient', error });
     }
 
-    const validation = updateCarZSchema.safeParse(req.body);
+
+    // Validaiton for the Patient Schema (Needs updating from the patient ZOD Schema)
+    const validation = updatePatientZSchema.safeParse(req.body);
 
     console.log
     
     if (!validation.success){
-        res.status(400).json({message: 'Invalid car data', errors: validation.error.issues });
+        res.status(400).json({message: 'Invalid patient data', errors: validation.error.issues });
         return;
     }
     
 };
 
- // DELETE a car
+ // DELETE a patient
 deletePatient = async (req: Request, res: Response): Promise<void> => {
     try{
         const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
         const deletedPatient = await patientService.deletePatient(id);
         if(!deletedPatient){
-            res.status(404).json({message: 'Car not found'});
+            res.status(404).json({message: 'Patient not found'});
             return;
         }
         res.status(200).json(deletedPatient);
