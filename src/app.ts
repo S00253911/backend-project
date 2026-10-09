@@ -1,14 +1,9 @@
 import express, {Application, Request, Response} from 'express' ;
 import patientRoutes from './routes/patients' ;
-
-
-
-
-import { env } from "./config/env" ;
 import swaggerUi from 'swagger-ui-express';
 import { swaggerSpec } from './config/swagger';
 
-const PORT = env.port;
+
 export const app: Application = express();
 app.use(express.json());
 

@@ -2,12 +2,10 @@ import { Request, Response } from 'express';
 import { MedicalService } from '../services/medicalservice';
 
 // ZOD Validation Schema's
-
-
 //Import The Zod Doctor Schema's from ../models later for  middleware authentication
 import { createDoctorZSchema } from '../models/doctors';
 import { updateDoctorZSchema } from '../models/doctors';
-
+// Instantiate The MedicalService
 const DoctorService = new MedicalService();
 
 

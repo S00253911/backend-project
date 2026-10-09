@@ -7,7 +7,7 @@ import { MedicalService } from '../services/medicalservice';
 //Import The Zod Patient Schema's from ../models later for  middleware authentication
 import { createPatientZSchema } from '../models/patients';
 import { updatePatientZSchema } from '../models/patients';
-
+// Instantiate The MedicalService
 const patientService = new MedicalService();
 
 

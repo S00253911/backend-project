@@ -3,13 +3,14 @@ import { IPatient } from './patients';
 import { IDoctor } from './doctors';
 import { z } from 'zod';
 
+// ZOD Validation Schema for Creating an Appointment
 export const createAppointmentZSchema = z.object({
     date: z.date(),
     time: z.string(),
     reason: z.string().min(1)
 
 });
-
+// ZOD Validation Schema for Updating an Appointment
 export const updateAppointmentZSchema = z.object({
     date: z.date(),
     time: z.string(),

@@ -2,6 +2,7 @@ import { model, Schema } from 'mongoose';
 import { IPatient } from './patients'; // importing the IDoctor interface    
 import { z } from 'zod';
 
+// ZOD Validation Schema for Creating a Doctor
 export const createDoctorZSchema = z.object({
     title: z.string().min(1),
     firstName: z.string().min(1),
@@ -10,7 +11,7 @@ export const createDoctorZSchema = z.object({
     age: z.number().min(0)
 
 });
-
+// ZOD Validation Schema for Updating a Doctor
 export const updateDoctorZSchema = z.object({
     title: z.string().min(1),
     firstName: z.string().min(1),
