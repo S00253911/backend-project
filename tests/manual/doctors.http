@@ -1,0 +1,104 @@
+@endpoint = http://localhost:3001/api/Doctors
+
+# @name postADoctors
+// Successful POST
+POST {{endpoint}} HTTP/1.1
+Content-Type: application/json
+x-api-key: blahblah
+
+{
+     "title": "Dr",
+     "firstName": "Mike",
+     "lastName": "Ross",
+     "specialization": "Surgeon",
+     "age": 50
+
+}
+
+###
+//Failed Validation POST
+POST {{endpoint}} HTTP/1.1
+Content-Type: application/json
+x-api-key: blahblah
+
+{ "title": "Dr",
+     "firstName": "",
+     "lastName": "Ross",
+     "specialization": "Surgeon",
+     "age": 50
+}
+
+###
+// Gets last Doctors Created
+@newDoctors = {{postADoctors.response.body._id}}
+###
+GET {{endpoint}}/{{newDoctors}} HTTP/3.0
+content-type: application/json
+x-api-key: blahblah
+
+###
+// GET Request on the set of resources
+GET {{endpoint}} HTTP/3.0
+content-type: application/json
+x-api-key: getDoctors
+
+###
+// Failed Get Request on Individual Resource
+GET {{endpoint}}/badDoctors HTTP/3.0
+content-type: application/json
+x-api-key: blahblah
+
+###
+// Successfully Delete Newest Doctors
+// Fails To Delete Newest Doctors if Already Deleted
+DELETE {{endpoint}}/{{newDoctors}} HTTP/3.0
+content-type: application/json
+x-api-key: deleteDoctorsNew
+
+###
+// Fail Request On Delete certain Doctors
+DELETE {{endpoint}}/badDoctors HTTP/3.0
+content-type: application//json
+x-api-key: deleteBadDoctors
+
+
+###
+// NON VALID UPDATE DATA
+PUT {{endpoint}}/{{{newDoctors}}} HTTP/3.0
+content-type: application/json
+x-api-key: updateDoctors
+
+{
+   "title": "Dr",
+     "firstName": "Mike",
+     "lastName": "Ross",
+     "age": 50
+}
+
+###
+// SUCCESSFULL Doctors Update
+PUT {{endpoint}}/{{newDoctors}} HTTP/3.0
+content-type: application/json
+x-api-key: updateDoctors
+
+{
+    "title": "Dr",
+     "firstName": "Sandra",
+     "lastName": "Hubble",
+     "specialization": "Neurology",
+     "age": 28
+}
+
+###
+// FAILED PUT AS Doctors DOESNT EXIST
+PUT {{endpoint}}/badDoctors HTTP/3.0
+content-type: application/json
+x-api-key: updateDoctors
+
+{
+    "title": "Dr",
+     "firstName": "Simon",
+     "lastName": "Doofenschmirtz",
+     "specialization": "Urologist",
+     "age": 39
+}

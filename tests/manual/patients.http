@@ -1,0 +1,96 @@
+@endpoint = http://localhost:3001/api/patient
+
+# @name postAPatient
+// Successful POST
+POST {{endpoint}} HTTP/1.1
+Content-Type: application/json
+x-api-key: blahblah
+
+{ "firstName" : "John",
+"lastName" : "Doe",
+"age": 24,
+"eirCode": "F26 F8V3"
+}
+
+###
+//Failed Validation POST
+POST {{endpoint}} HTTP/1.1
+Content-Type: application/json
+x-api-key: blahblah
+
+{ "firstName" : "",
+"lastName" : "Doe",
+"age": 24,
+"eirCode": "F26 F8V3"
+}
+
+###
+// Gets last Patient Created
+@newPatient = {{postAPatient.response.body._id}}
+###
+GET {{endpoint}}/{{newPatient}} HTTP/3.0
+content-type: application/json
+x-api-key: blahblah
+
+###
+// GET Request on the set of resources
+GET {{endpoint}} HTTP/3.0
+content-type: application/json
+x-api-key: getPatient
+
+###
+// Failed Get Request on Individual Resource
+GET {{endpoint}}/badPatient HTTP/3.0
+content-type: application/json
+x-api-key: blahblah
+
+###
+// Successfully Delete Newest Patient
+// Fails To Delete Newest Patient if Already Deleted
+DELETE {{endpoint}}/{{newPatient}} HTTP/3.0
+content-type: application/json
+x-api-key: deletePatientNew
+
+###
+// Fail Request On Delete certain patient
+DELETE {{endpoint}}/badPatient HTTP/3.0
+content-type: application//json
+x-api-key: deleteBadPatient
+
+
+###
+// NON VALID UPDATE DATA
+PUT {{endpoint}}/{{{newPatient}}} HTTP/3.0
+content-type: application/json
+x-api-key: updatePatient
+
+{
+    "firstName": "Kevin",
+    "lastName": "Mitchel"
+}
+
+###
+// SUCCESSFULL Patient Update
+PUT {{endpoint}}/{{newPatient}} HTTP/3.0
+content-type: application/json
+x-api-key: updatePatient
+
+{
+    "firstName": "Kevin",
+    "lastName": "Mitchel",
+    "age": 43,
+    "eirCode": "F26 9999"
+}
+
+###
+// FAILED PUT AS PATIENT DOESNT EXIST
+PUT {{endpoint}}/badPatient HTTP/3.0
+content-type: application/json
+x-api-key: updatePatient
+
+{
+    "firstName": "Kevin",
+    "lastName": "Mitchel",
+    "age": 43,
+    "eirCode": "F26 9999"
+}

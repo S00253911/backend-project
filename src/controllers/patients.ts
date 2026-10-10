@@ -2,8 +2,6 @@ import { Request, Response } from 'express';
 import { MedicalService } from '../services/medicalservice';
 
 // ZOD Validation Schema's
-
-
 //Import The Zod Patient Schema's from ../models later for  middleware authentication
 import { createPatientZSchema } from '../models/patients';
 import { updatePatientZSchema } from '../models/patients';
@@ -21,19 +19,19 @@ getPatients = async (_req: Request, res: Response): Promise<void> => {
     } catch (error) {
         res.status(500).json({ message: 'Error fetching patients', error });
     }
-/**
- * @openapi
- *  /patients:
- *    get:
- *        summary: Retrieve all patients
- *        tags:
- *          - patients
- *        responses: 
- *          200:
- *            description: Successfully retrieved patients
- *          500:
- *            description: Internal server error
- */
+// /**
+//  * @openapi
+//  *  /patients:
+//  *    get:
+//  *        summary: Retrieve all patients
+//  *        tags:
+//  *          - patients
+//  *        responses: 
+//  *          200:
+//  *            description: Successfully retrieved patients
+//  *          500:
+//  *            description: Internal server error
+//  */
 };
 // GET Patient by their Id
 getPatientById = async (req: Request, res: Response): Promise<void> => {

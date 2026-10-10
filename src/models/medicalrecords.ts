@@ -4,13 +4,17 @@ import { IDoctor } from './doctors';
 import { z } from 'zod';
 
 export const createMedicalRecordZSchema = z.object({
-    age: z.number(),
-    eirCode: z.string().min(1),
+    date: z.coerce.date(),
+    diagnosis: z.string().min(1),
+    treatment: z.string().min(1),
+    prescription: z.string().min(1)
 });
 
 export const updateMedicalRecordZSchema = z.object({
-    age: z.number(),
-    eirCode: z.string().min(1),
+    date: z.coerce.date(),
+    diagnosis: z.string().min(1),
+    treatment: z.string().min(1),
+    prescription: z.string().min(1)
 });
 
 export interface IMedicalRecord{ // Patients Medical Record

@@ -1,0 +1,100 @@
+@endpoint = http://localhost:3001/api/MedicalRecords
+
+# @name postAMedicalRecords
+// Successful POST
+POST {{endpoint}} HTTP/1.1
+Content-Type: application/json
+x-api-key: blahblah
+
+{
+     "date": "2026-10-22",
+     "diagnosis": "Infected Big Toe",
+     "treatment": "Anti-biotics",
+     "prescription": "Amoxicillin"
+
+}
+
+###
+//Failed Validation POST
+POST {{endpoint}} HTTP/1.1
+Content-Type: application/json
+x-api-key: blahblah
+
+{ 
+     "diagnosis": "Infected Big Toe",
+     "treatment": "Anti-biotics",
+     "prescription": "Amoxicillin"
+}
+
+###
+// Gets last MedicalRecords Created
+@newMedicalRecords = {{postAMedicalRecords.response.body._id}}
+###
+GET {{endpoint}}/{{newMedicalRecords}} HTTP/3.0
+content-type: application/json
+x-api-key: blahblah
+
+###
+// GET Request on the set of resources
+GET {{endpoint}} HTTP/3.0
+content-type: application/json
+x-api-key: getMedicalRecords
+
+###
+// Failed Get Request on Individual Resource
+GET {{endpoint}}/badMedicalRecords HTTP/3.0
+content-type: application/json
+x-api-key: blahblah
+
+###
+// Successfully Delete Newest MedicalRecords
+// Fails To Delete Newest MedicalRecords if Already Deleted
+DELETE {{endpoint}}/{{newMedicalRecords}} HTTP/3.0
+content-type: application/json
+x-api-key: deleteMedicalRecordsNew
+
+###
+// Fail Request On Delete certain MedicalRecords
+DELETE {{endpoint}}/badMedicalRecords HTTP/3.0
+content-type: application//json
+x-api-key: deleteBadMedicalRecords
+
+
+###
+// NON VALID UPDATE DATA
+PUT {{endpoint}}/{{{newMedicalRecords}}} HTTP/3.0
+content-type: application/json
+x-api-key: updateMedicalRecords
+
+{
+   "title": "Dr",
+     "firstName": "Mike",
+     "lastName": "Ross",
+     "age": 50
+}
+
+###
+// SUCCESSFULL MedicalRecords Update
+PUT {{endpoint}}/{{newMedicalRecords}} HTTP/3.0
+content-type: application/json
+x-api-key: updateMedicalRecords
+
+{
+    "date": "2026-05-15",
+     "diagnosis": "Cured Big Toe",
+     "treatment": "NaN",
+     "prescription": "NaN"
+}
+
+###
+// FAILED PUT AS MedicalRecords DOESNT EXIST
+PUT {{endpoint}}/badMedicalRecords HTTP/3.0
+content-type: application/json
+x-api-key: updateMedicalRecords
+
+{
+     "date": "2026-05-15",
+     "diagnosis": "Cured Big Toe",
+     "treatment": "NaN",
+     "prescription": "NaN"
+}

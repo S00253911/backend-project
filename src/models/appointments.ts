@@ -5,14 +5,14 @@ import { z } from 'zod';
 
 // ZOD Validation Schema for Creating an Appointment
 export const createAppointmentZSchema = z.object({
-    date: z.date(),
+    date: z.coerce.date(), // ALLOWS INPUT OF STRING VALUE FOR DATE
     time: z.string(),
     reason: z.string().min(1)
 
 });
 // ZOD Validation Schema for Updating an Appointment
 export const updateAppointmentZSchema = z.object({
-    date: z.date(),
+    date: z.coerce.date(),
     time: z.string(),
     reason: z.string().min(1)
 });

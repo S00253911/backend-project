@@ -1,0 +1,93 @@
+@endpoint = http://localhost:3001/api/Appointments
+
+# @name postAAppointments
+// Successful POST
+POST {{endpoint}} HTTP/1.1
+Content-Type: application/json
+x-api-key: blahblah
+
+{ "date" : "2026-10-15",
+"time" : "5pm",
+"reason": "Lump on stomach"
+}
+
+###
+//Failed Validation POST
+POST {{endpoint}} HTTP/1.1
+Content-Type: application/json
+x-api-key: blahblah
+
+{ "date" : "2026-10-15",
+"time" : "",
+"reason": "Lump on stomach"
+}
+
+###
+// Gets last Appointments Created
+@newAppointments = {{postAAppointments.response.body._id}}
+###
+GET {{endpoint}}/{{newAppointments}} HTTP/3.0
+content-type: application/json
+x-api-key: blahblah
+
+###
+// GET Request on the set of resources
+GET {{endpoint}} HTTP/3.0
+content-type: application/json
+x-api-key: getAppointments
+
+###
+// Failed Get Request on Individual Resource
+GET {{endpoint}}/badAppointments HTTP/3.0
+content-type: application/json
+x-api-key: blahblah
+
+###
+// Successfully Delete Newest Appointments
+// Fails To Delete Newest Appointments if Already Deleted
+DELETE {{endpoint}}/{{newAppointments}} HTTP/3.0
+content-type: application/json
+x-api-key: deleteAppointmentsNew
+
+###
+// Fail Request On Delete certain Appointments
+DELETE {{endpoint}}/badAppointments HTTP/3.0
+content-type: application//json
+x-api-key: deleteBadAppointments
+
+
+###
+// NON VALID UPDATE DATA
+PUT {{endpoint}}/{{{newAppointments}}} HTTP/3.0
+content-type: application/json
+x-api-key: updateAppointments
+
+{
+    "date": "2024-09-12",
+    "time": "2pm",
+    "reason": " ",
+}
+
+###
+// SUCCESSFULL Appointments Update
+PUT {{endpoint}}/{{newAppointments}} HTTP/3.0
+content-type: application/json
+x-api-key: updateAppointments
+
+{
+    "date": "2024-09-12",
+    "time": "2pm",
+    "reason": "Big lump on toe"
+}
+
+###
+// FAILED PUT AS Appointments DOESNT EXIST
+PUT {{endpoint}}/badAppointments HTTP/3.0
+content-type: application/json
+x-api-key: updateAppointments
+
+{
+    "date": "2024-09-12",
+    "time": "2pm",
+    "reason": "Big lump on toe"
+}
