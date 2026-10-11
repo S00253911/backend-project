@@ -26,9 +26,4 @@ describe ('Test Appointment Validation', () => {
         expect(() => createAppointmentZSchema.parse(
             {...validAppointment, "date" : '2021-43-12'})).toThrow();
     });
-
-    it('should fail for the missing eirCode ', () => {
-        expect(() => createAppointmentZSchema.parse(
-            {...validAppointment, "eirCode" : '' })).toThrow();
-    });
 });

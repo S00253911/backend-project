@@ -7,7 +7,7 @@ export const createMedicalRecordZSchema = z.object({
     date: z.coerce.date(),
     diagnosis: z.string().min(1),
     treatment: z.string().min(1),
-    prescription: z.string().min(510)
+    prescription: z.string().min(10)
 });
 
 export const updateMedicalRecordZSchema = z.object({

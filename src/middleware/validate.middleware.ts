@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express'; 
 import { z } from 'zod';
+import mongoose from 'mongoose';
 
 export const validate = (schema: z.ZodObject<any>) => (
     req: Request,

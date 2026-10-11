@@ -6,130 +6,142 @@ beforeAll (async () => {
     await connectDB();
 });
 
-describe("GET /patient", () => {
+describe("GET /doctors", () => {
 
-    it('returns all patients', async () => {
+    it('returns all doctorss', async () => {
         const response = await request(app)
-        .get('/api/patient');
+        .get('/api/doctors');
 
         expect(response.status).toBe(200);
-        console.log('Get all patient test response:', response.body);
+        console.log('Get all doctors test response:', response.body);
     });
-// RETURNS PATEINT BY ID
-    it ('returns a patient by its ID', async () => {
-        const newpatient = {
-            make: 'Toyota',
-            model: 'Camry',
-            year: 2020
+// RETURNS DOCTORS BY ID
+    it ('returns a doctors by its ID', async () => {
+        const newdoctors = {
+            "title" : "Dr",
+            "firstName" : "John",
+            "lastName": "Martin",
+            "specialization": "Surgeon",
+            "age": 43
         };
         const postResponse = await request(app)
-        .post('/api/patient')
-        .send(newpatient);
+        .post('/api/doctors')
+        .send(newdoctors);
         const response = await request(app)
-        .get('/api/patient/1')
+        .get(`/api/doctors/${postResponse.body._id}`)
 
         expect(postResponse.status).toBe(201);
-        console.log('Post patient test response:', postResponse.body);
+        console.log('Post doctors test response:', postResponse.body);
         
         expect(response.status).toBe(200);
-        console.log('Get patient by ID test response:', response.body);
+        console.log('Get doctors by ID test response:', response.body);
     });
-// RETURNS 404 FOR NON-EXISTENT PATIENT ID
-    it ('returns 404 for a non-existent patient ID', async () => {
+// RETURNS 404 FOR NON-EXISTENT doctors ID
+    it ('returns 404 for a non-existent doctors ID', async () => {
         const response = await request(app)
-        .get('/api/v1/patient/999234');
+        .get('/api/doctors/999234');
 
         expect (response.status).toBe(404);
-        console.log('Non-existent patient test response:', response.body);
+        console.log('Non-existent doctors test response:', response.body);
     });
-// CREATES A NEW PATIENt
-    it ('creates a new patient', async () => {
-        const newpatient = {
-            make: 'Toyota',
-            model: 'Camry',
-            year: 2020
+// CREATES A NEW doctors
+    it ('creates a new doctors', async () => {
+        const newdoctors = {
+           "title" : "Dr",
+            "firstName" : "John",
+            "lastName": "Martin",
+            "specialization": "Surgeon",
+            "age": 43
         };
         const response = await request(app)
-        .post('/api/v1/patient')
-        .send(newpatient);
+        .post('/api/doctors')
+        .send(newdoctors);
 
         expect(response.status).toBe(201);
-        console.log('Create patient test response:', response.body);    
+        console.log('Create doctors test response:', response.body);    
     });
-// DELETES A PATIENT
-    it ('deleted a patient', async () => {
+// DELETES A doctors
+    it ('deleted a doctors', async () => {
         const response = await request(app)
-        .delete('/api/v1/patient/1');
+        .delete('/api/doctors/1');
 
         expect(response.status).toBe(200);
-        console.log('Delete patient test response:', response.body);
+        console.log('Delete doctors test response:', response.body);
     });
-// RETURNS 404 NOT FOUND FOR NOT EXISTANT PATEINT
-    it ('returns 404 when deleting a non-existent patient', async () => {
+// RETURNS 404 NOT FOUND FOR NOT EXISTANT DOCTORS
+    it ('returns 404 when deleting a non-existent doctors', async () => {
         const response = await request(app)
-        .delete('/api/v1/patient/999');
+        .delete('/api/doctors/999');
 
         expect(response.status).toBe(404);
-        console.log('Delete non-existent patient test response:', response.body);
+        console.log('Delete non-existent doctors test response:', response.body);
     });
-// UPDATES PATIENT
-    it ('updates a patient', async () => {
-        const updatedpatient = {
-            make: 'Honda',
-            model: 'Civic',
-            year: 2021
+// UPDATES doctors
+    it ('updates a doctors', async () => {
+        const updateddoctors = {
+            "title" : "Jr",
+            "firstName" : "Polly",
+            "lastName": "Swagger",
+            "specialization": "Neurologist",
+            "age": 72
         };
         const response = await request(app)
-        .put('/api/v1/patient/1')
-        .send(updatedpatient);
+        .put('/api/doctors/1')
+        .send(updateddoctors);
 
         expect(response.status).toBe(200);
-        console.log('Update patient test response:', response.body);
+        console.log('Update doctors test response:', response.body);
     });
-// 404 WHEN UPDATING NON-EXISTENT PATIENT
-    it ('returns 404 when updating a non-existent patient', async () => {
-        const updatedpatient = {
-            make: 'Honda',
-            model: 'Civic',
-            year: 2021
+// 404 WHEN UPDATING NON-EXISTENT doctors
+    it ('returns 404 when updating a non-existent doctors', async () => {
+        const updateddoctors = {
+            "title" : "Dr",
+            "firstName" : "Johnny",
+            "lastName": "Test",
+            "specialization": "Lab Rat",
+            "age": 43
         };
         const response = await request(app)
-        .put('/api/v1/patient/999')
-        .send(updatedpatient);
+        .put('/api/doctors/999')
+        .send(updateddoctors);
         expect(response.status).toBe(404);
-        console.log('Update non-existent patient test response:', response.body);
+        console.log('Update non-existent doctors test response:', response.body);
     });
-// 400 WHEN CREATING PATIENT WITH INVALID DATA
-    it ('returns 400 when creating a patient with invalid data', async () => {
-        const invalidpatient = {
-            make: '',
-            model: '',
-            year: 2020
+// 400 WHEN CREATING doctors WITH INVALID DATA
+    it ('returns 400 when creating a doctors with invalid data', async () => {
+        const invaliddoctors = {
+            "title" : "a",
+            "firstName" : "",
+            "lastName": "Martin",
+            "specialization": "Surgeon",
+            "age": 43
         };
         const response = await request(app)
-        .post('/api/v1/patient')
-        .send(invalidpatient);
+        .post('/api/doctors')
+        .send(invaliddoctors);
 
         expect(response.status).toBe(400);
         console.log('Invalid create test response:', response.body);
     });
-// 400 WHEN UPDATING PATIENT WITH INVALID DATA
-    it ('returns 400 when updating a patient with invalid data', async () => {
-        const invalidpatient = {
-            make: '',
-            model: '',
-            year: 2020
+// 400 WHEN UPDATING doctors WITH INVALID DATA
+    it ('returns 400 when updating a doctors with invalid data', async () => {
+        const invaliddoctors = {
+            "title" : "A",
+            "firstName" : "Perfecty",
+            "lastName": "Good",
+            "specialization": "Surgeon",
+            "age": 13
         };
         const response = await request(app)
-        .put('/api/v1/patient/1')
-        .send(invalidpatient);
+        .put('/api/doctors/1')
+        .send(invaliddoctors);
         expect(response.status).toBe(400);
         console.log('Invalid update test response:', response.body);
     });
 // 500 WHEN SERVER ERROR
     it ('returns 500 when there is a server error', async () => {
         const response = await request(app)
-        .get('/api/v1/patient/error');
+        .get('/api/doctors/error');
         expect(response.status).toBe(500);
         console.log('Server error test response:', response.body);
     });

@@ -13,8 +13,8 @@ export const createAppointmentZSchema = z.object({
 // ZOD Validation Schema for Updating an Appointment
 export const updateAppointmentZSchema = z.object({
     date: z.coerce.date(),
-    time: z.string(),
-    reason: z.string().min(1)
+    time: z.string().min(1),
+    reason: z.string().min(10)
 });
 
 export interface IAppointment{ // Patient Appointment Interface

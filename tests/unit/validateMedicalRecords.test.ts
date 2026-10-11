@@ -4,7 +4,7 @@ const validMedicalRecord = {
     "date" : "2026-10-05",
     "diagnosis" : "Kidney Failure",
     "treatment": "Surgery",
-    "prescription": "Morphine"
+    "prescription": "Morphine + Juice"
 }
 
 describe ('Test Medical Record Validation', () => {
@@ -25,11 +25,11 @@ describe ('Test Medical Record Validation', () => {
 
     it('should fail for the unparsaable date ', () => {
         expect(() => createMedicalRecordZSchema.parse(
-            {...validMedicalRecord, "date" : 2020-10-14})).toThrow();
+            {...validMedicalRecord, "date" : "not-a-date"})).toThrow();
     });
 
     it('should fail for the missing treatment ', () => {
         expect(() => createMedicalRecordZSchema.parse(
-            {...validMedicalRecord, "treatmnent" : undefined })).toThrow();
+            {...validMedicalRecord, "treatment" : '' })).toThrow();
     });
 });
