@@ -13,9 +13,9 @@ describe ('Test Patient Validation', () => {
             validPatient)).not.toThrow();
         });
 
-    it('should fail for the following invalid data - no date', () => {
+    it('should fail for the following invalid age - no age', () => {
         expect(() => createPatientZSchema.parse(
-            {...validPatient, "date" : undefined})).toThrow();
+            {...validPatient, "age" : undefined})).toThrow();
         });
 
     it('should fail for the too short name', () => {

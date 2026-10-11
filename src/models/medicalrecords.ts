@@ -7,7 +7,7 @@ export const createMedicalRecordZSchema = z.object({
     date: z.coerce.date(),
     diagnosis: z.string().min(1),
     treatment: z.string().min(1),
-    prescription: z.string().min(1)
+    prescription: z.string().min(510)
 });
 
 export const updateMedicalRecordZSchema = z.object({
@@ -31,8 +31,8 @@ const medicalRecordSchema = new Schema<IMedicalRecord>(
         patient: {type: Schema.Types.ObjectId, ref: 'Patient'},
         doctor: {type: Schema.Types.ObjectId, ref: 'Doctor'},
         date: {type: Date, required: true},
-        diagnosis: {type: String, required: false},
-        treatment: {type: String, required: false},
+        diagnosis: {type: String, required: true},
+        treatment: {type: String, required: true},
         prescription: {type: String, required: false}
     },
     {timestamps: true}

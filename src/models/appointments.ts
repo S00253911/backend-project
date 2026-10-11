@@ -7,7 +7,7 @@ import { z } from 'zod';
 export const createAppointmentZSchema = z.object({
     date: z.coerce.date(), // ALLOWS INPUT OF STRING VALUE FOR DATE
     time: z.string(),
-    reason: z.string().min(1)
+    reason: z.string().min(10)
 
 });
 // ZOD Validation Schema for Updating an Appointment
