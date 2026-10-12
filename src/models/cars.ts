@@ -1,4 +1,4 @@
-import {Schema, model } from 'mongoose';
+import { Schema, model } from 'mongoose';
 import { z } from 'zod';
 
 
@@ -23,9 +23,11 @@ import { z } from 'zod';
  *  example: 2010
  */
 export const createCarZScheme = z.object({
-    make: z.string().min(1),
-    model: z.string().min(1),
-    year: z.number().min(1950).optional(),
+    body: z.object({
+        make: z.string().min(1),
+        model: z.string().min(1),
+        year: z.number().min(1950).optional(),
+    })
 });
 
 export const updateCarZSchema = z.object({
@@ -34,19 +36,27 @@ export const updateCarZSchema = z.object({
     year: z.number().min(1950).optional(),
 })
 
-export interface ICar{
+export const carParamsSchema = z.object({
+    params: z.object({
+        id: z
+            .string()
+            .regex(/^[0-9a-fA-F]{24}$/, 'Invalid ObjectId')
+    })
+})
+
+export interface ICar {
     make: string;
     model: string;
     year: Number;
 }
 
 const carSchema = new Schema<ICar>(
-{
-    make: {type: String, required: true},
-    model: {type: String, required: true},
-    year: {type: Number, min:1950},
-},
-{timestamps: true}
+    {
+        make: { type: String, required: true },
+        model: { type: String, required: true },
+        year: { type: Number, min: 1950 },
+    },
+    { timestamps: true }
 );
 
 export const CarModel = model<ICar>('Car', carSchema);

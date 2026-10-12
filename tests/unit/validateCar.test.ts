@@ -9,12 +9,12 @@ const validCar = {
 describe ('Test Car Validation', () => {
     it('should pass for the following valid data', () => {
         expect(() => createCarZScheme.parse(
-            validCar)).not.toThrow();
+           {body:  validCar} )).not.toThrow();
         });
 
     it('should pass for the following valid data - no date', () => {
         expect(() => createCarZScheme.parse(
-            {...validCar, "year" : undefined})).not.toThrow();
+            {body: {...validCar, "year" : undefined}})).not.toThrow();
         });
 
     it('should fail for the too early year', () => {

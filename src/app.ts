@@ -5,6 +5,7 @@ import { env } from "./config/env" ;
 //import {authenticateKey} from './middleware/auth.middleware';
 import swaggerUi from 'swagger-ui-express';
 import { swaggerSpec } from './config/swagger';
+import { errorHandler } from './middleware/errorhandling';
 
 //import { apps } from './middleware/simplelogging';
 // ** Updated  the app.use function to the imported function 'apps'. Routes now use apps.get instead of app.get ** 
@@ -17,6 +18,7 @@ app.use(express.json()); // Weirdly enough when i use the apps import function f
 
 // the ping route (To display my name)
 app.get("/ping", async (_req : Request, res: Response) => {
+    
     res.json({
         message: "Hello from Ryan"
     });
@@ -44,6 +46,16 @@ app.get('/oranges', async (_req : Request, res: Response) => {
     
 });
 
+app.get("/pong", (_req: Request, res: Response) => {
+    console.log("Received request to /pong");
+    throw new Error("Simulated error in /pong route");
+});
+
+app.get("/pung", async (_req: Request, res: Response) =>{
+    console.log("Receieved request to /pung");
+    throw new Error("Simulated error in /pung route");
+});
+
 // Starting the server and connecting to the database
 // const startServer = async () => {
 //     await connectDB(); // Connect to the database before starting the server
@@ -63,3 +75,5 @@ app.use((req, _res, next) => {
 // Telling the application to use the router
 app.use('/api/v1/cars', carRoutes);  // added the authentication to the router directly
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec)); // Swagger documentation route
+
+app.use(errorHandler);

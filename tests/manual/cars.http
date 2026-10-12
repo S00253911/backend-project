@@ -7,7 +7,9 @@ Content-Type: application/json
 x-api-key: blahblah
 
 { "make" : "make2",
-"model" : "model2"
+"model" : "model2",
+"year" : 90
+
 }
 
 ###
@@ -28,3 +30,8 @@ x-api-key: blahblah
 
 DELETE {{endpoint}}//sillycarID HTTP/3.0
 content-type: application/application/json
+
+###
+DELETE {{endpoint}}/{{newCar}} HTTP/3.0
+content-type: application/json
+x-api-key: woofwoof
